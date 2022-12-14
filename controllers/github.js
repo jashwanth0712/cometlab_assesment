@@ -69,3 +69,81 @@ export const createRepo = async function(req,res){
     }
   
 }
+export const getRepo = async function(req,res){
+    let username="";
+    try{
+        if(!req.body.username){
+            //when username is not mentioned in the body. get request is made to fing the loginID of the authenticated account
+            username=await get_username();
+        }
+        else
+            username=req.body.username;
+            
+        console.log(`username that was processed is ${username}`)
+
+        if(!req.body.repoName){
+		    res.status(400).json({msg: `Repo name not mentioned in the request body`});
+        }
+        console.log(`Repo name is ${req.body.repoName}`)
+        const repo=await octokit.request(`GET /repos/${username}/${req.body.repoName}`, {
+            owner: 'OWNER',
+            repo: 'REPO'
+          })
+        res.send(repo.data)
+    }catch (err) {
+		console.log(err);
+        if(err.status==404)
+    		res.status(404).json({msg: `Repo not found`});
+		res.status(500).json({msg: `Internal Server Error.`});
+	}
+}
+export const Topics = async function(req,res){
+    let username="";
+    try{
+        if(!req.body.username){
+            //when username is not mentioned in the body. get request is made to fing the loginID of the authenticated account
+            username=await get_username();
+        }
+        else
+            username=req.body.username;
+            
+        console.log(`username that was processed is ${username}`)
+
+        if(!req.body.repoName){
+		    res.status(400).json({msg: `Repo name not mentioned in the request body`});
+        }
+        console.log(`Repo name is ${req.body.repoName}`)
+        const repo=await octokit.request(`GET /repos/${username}/${req.body.repoName}`, {
+            owner: 'OWNER',
+            repo: 'REPO'
+          })
+        // res.send(repo.data)
+        let method=req.params.method;
+        if(method=="list")
+          res.send(repo.data.topics)
+    if(method=="update"){
+        let k =await octokit.request(`PUT /repos/${username}/${req.body.repoName}/topics`, {
+            owner: 'OWNER',
+            repo: 'REPO',
+            names:req.body.updated_topics
+          })
+          res.status(k.status).json({msg: `Updated topics`, updated_topics : k.data.names});
+
+    }
+
+    if(method=="delete"){
+        let k =await octokit.request(`PUT /repos/${username}/${req.body.repoName}/topics`, {
+            owner: 'OWNER',
+            repo: 'REPO',
+            names: []
+          })
+          res.status(k.status).json({msg: `Deleted all topics`, updated_topics : k.data.names});
+
+    }
+    }catch (err) {
+		console.log(err);
+        if(err.status==404)
+    		res.status(404).json({msg: `Repo not found`});
+		res.status(500).json({msg: `Internal Server Error.`});
+	}
+}
