@@ -3,7 +3,21 @@ Backend assesment submission for cometlab intern role
 
 ## List of endpoints
 [`/getAllRepos`](https://github.com/jashwanth0712/cometlab_assesment/blob/main/README.md#list-of-endpoints)
-[`/createRepo`](https://github.com/jashwanth0712/cometlab_assesment/edit/main/README.md#create-repository)
+[`/creareRepo`](https://github.com/jashwanth0712/cometlab_assesment/blob/main/README.md#create-repository)
+# Installation
+Clone the Repository with 
+```
+git clone https://github.com/jashwanth0712/cometlab_assesment.git
+```
+install the npm packages and Run the server
+```
+cd cometlab_assesment
+npm install
+```
+after Installation of all the required node modules run the server
+```
+npm start
+```
 # List All Repos
  This end point lists all Repos of a User
 ## Route `/getAllRepos`
@@ -17,25 +31,6 @@ Backend assesment submission for cometlab intern role
 - `Username`  is optional
 - when `Username` is empty the data from the authenticated user is shown
 
-## API calls used
-### get authenticated user login 
-```
-const response = await octokit.request("GET /user", {
-            org: "octokit",
-            type: "private",
-            });
-username=response.data.login;
-```
-
-### get  the repositories list of the user
-
-```
-    const repos_list=await octokit.request(`GET /users/${username}/repos`, {
-        org: 'ORG',
-        data: undefined
-      })
-    res.send(repos_list.data)
-```
 
 # Create Repository
 this endpoint creates new Repository in the authticated account
