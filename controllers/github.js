@@ -11,7 +11,13 @@ const get_username=async function(){
         });
     return response.data.login;
 }
-
+export const getUser= async function(req,res){
+    const response = await octokit.request("GET /user", {
+        org: "octokit",
+        type: "private",
+        });
+    res.send(response.data)
+}
 export const getAllRepos= async function (req, res) {
     let username="";
     try{
