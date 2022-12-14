@@ -21,7 +21,7 @@ router.post("/createRepo", createRepo);
 router.post("/getRepo", getRepo)
 router.post("/Topics/:method",Topics)
 // Default route
-app.get("*", (req, res) => {
+router.get("*", (req, res) => {
     res.send("PAGE NOT FOUND");
   });
     
