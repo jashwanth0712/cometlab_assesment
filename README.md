@@ -2,9 +2,8 @@
 Backend assesment submission for cometlab intern role
 
 ## List of endpoints
-[`/getAllRepos`](List-All-Repos)
-
-
+[`/getAllRepos`](https://github.com/jashwanth0712/cometlab_assesment/blob/main/README.md#list-of-endpoints)
+[`/createRepo`](https://github.com/jashwanth0712/cometlab_assesment/edit/main/README.md#create-repository)
 # List All Repos
  This end point lists all Repos of a User
 ## Route `/getAllRepos`
@@ -36,4 +35,19 @@ username=response.data.login;
         data: undefined
       })
     res.send(repos_list.data)
+```
+
+# Create Repository
+this endpoint creates new Repository in the authticated account
+## Route `/createRepo`
+### Request Body
+   - Repo Name (Required)
+   - Repo Description (Optional)
+   - Default Visibility (Optional, default is private)
+``` 
+{
+    "RepoName":"Test_Repo",
+    "DefaultVisibility":"public",
+    "Description":"this is  a test repo"
+}
 ```
