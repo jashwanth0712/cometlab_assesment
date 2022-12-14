@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllRepos ,createRepo,getRepo,Topics} from "../controllers/github.js";
+import { getAllRepos ,createRepo,getRepo,Topics,getAllReposwithcondition} from "../controllers/github.js";
 const message={
     "msg":"list of API endpoints",
     "Endpoints":{
@@ -17,6 +17,7 @@ router.get("/", async function (req, res) {
     res.send(message)
 });
 router.post("/getAllRepos", getAllRepos);
+router.post("/getAllRepos/:forks/:stars", getAllReposwithcondition);
 router.post("/createRepo", createRepo);
 router.post("/getRepo", getRepo)
 router.post("/Topics/:method",Topics)

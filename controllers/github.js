@@ -34,6 +34,33 @@ export const getAllRepos= async function (req, res) {
 	}
 }
 
+export const getAllReposwithcondition = async function (req, res) {
+    let username="";
+    try{
+        if(!req.body.username){
+            //when username is not mentioned in the body. get request is made to fing the loginID of the authenticated account
+            username=await get_username();
+        }
+        else
+            username=req.body.username;
+            
+        console.log(`username that was processed is ${username}`)
+        const repos_list=await octokit.request(`GET /users/${username}/repos`, {
+            org: 'ORG',
+            data: undefined
+          })
+        let result=[]
+        for(let i in repos_list.data){
+            if(i.forks_count>req.params.forks)
+                result.push(i)
+        }
+    res.send(result)
+       // res.send(repos_list.data)
+    }catch (err) {
+		console.log(err);
+		res.status(500).json({msg: `Internal Server Error.`});
+	}
+}
 export const createRepo = async function(req,res){
     if(!req.body.RepoName){
         console.error("Repo name is not mentioned in the request body ")
